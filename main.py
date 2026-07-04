@@ -36,6 +36,7 @@ BOT_TOKEN = os.environ["BOT_TOKEN"]
 FREE_CHANNEL_ID = int(os.environ["FREE_CHANNEL_ID"])
 PRIVATE_CHANNEL_ID = int(os.environ["PRIVATE_CHANNEL_ID"])
 PRIVATE_JOIN_LINK = os.environ["PRIVATE_JOIN_LINK"]
+GALLERY_URL = os.environ["GALLERY_URL"]  # contoh: https://joliegalleryvercel.vercel.app/gallery
 
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
@@ -106,7 +107,10 @@ async def on_private_post(event):
         FREE_CHANNEL_ID,
         io.BytesIO(teaser_bytes),
         caption="🔒 Drop baru di Private Channel. Yang mau lihat full versi, gas join.",
-        buttons=[Button.url("Buka Private Channel", PRIVATE_JOIN_LINK)],
+        buttons=[
+            [Button.url("Buka Private Channel", PRIVATE_JOIN_LINK)],
+            [Button.url("Lihat Semua Gallery", GALLERY_URL)],
+        ],
     )
 
     supabase.table("posts").update({"teaser_posted": True}).eq(
